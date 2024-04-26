@@ -8,7 +8,7 @@ import {
     Button,
   } from "@nextui-org/react";
   import { useState } from "react";
-  import { getProductData } from "../api/actions";
+  import { getProductData, getInventoryData } from "../api/actions";
 import React from "react";
   
   const ProductCard: React.FC = () => {
@@ -104,21 +104,21 @@ import React from "react";
   };
   
   const ProductCard2: React.FC = () => {
-    const [data, setData] = useState<ProductData>();
+    const [data, setData] = useState<Item>();
     const [loadingState, setLoadingState] = useState(false);
-    const [product, setProduct] = useState("");
+    const [productInventory, setProduct] = useState("");
     const [error, setError] = useState("");
   
     const handleSearch = () => {
       console.log("Fetching Product Data...");
-      console.log(product);
+      console.log(productInventory);
       setLoadingState(true);
-      getProductData(product)
+      getInventoryData(productInventory)
         .then((res) => {
           setError("");
           if (res) {
             console.log(res);
-            setData(res);
+        
             setLoadingState(false);
           }
         })
@@ -143,8 +143,8 @@ import React from "react";
               <Input
                 id="productname"
                 type="text"
-                label="Product"
-                value={product}
+                label="test"
+                value={productInventory}
                 onChange={(e) => {
                   setProduct(e.target.value);
                 }}
@@ -164,18 +164,16 @@ import React from "react";
         {data ? (
           <CardBody>
             <div className="flex flex-col items-center">
-              <h1 className="text-3xl font-bold">{data.product}</h1>
-              <p className="text-3xl font-bold">{data.ingredient}</p>
-              <p className="text-3xl font-bold">{data.calories} Kcal</p>
-              <p className="text-lg"> {data.servings} servings</p>
-              <p className="text-lg"> {data.weight} g</p>
-              <p className="text-lg"> {data.price} £</p>
+              <h1 className="text-3xl font-bold">{data.id}</h1>
+              <p className="text-3xl font-bold">{data.name}</p>
+              <p className="text-3xl font-bold">{data.numberOfItem} Kcal</p>
+            
             </div>
           </CardBody>
         ) : (
           <CardBody>
             <div className="flex flex-col items-center">
-              <p className="text-xl font-bold">Please enter a product</p>
+              <p className="text-xl font-bold">test</p>
             </div>
           </CardBody>
         )}
@@ -187,7 +185,7 @@ import React from "react";
               <p className="text-xs  text-gray-600 ">Last update successful.</p>
             )}
             {!data && (
-              <p className="text-xs  text-gray-600 ">Waiting for input...</p>
+              <p className="text-xs  text-gray-600 ">test...</p>
             )}
           </div>
         </CardFooter>
